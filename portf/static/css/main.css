@@ -1,0 +1,8 @@
+body{
+    background-color: azure;
+}
+
+.chatForm{
+    width: 18rem;
+    position: relative;
+}

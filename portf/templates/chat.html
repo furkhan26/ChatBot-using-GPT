@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Demo</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .card {
+            background-color: rgb(183, 207, 199);
+            border-radius: 6px;
+            max-width: 500px;
+            margin: auto;
+            margin-top: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-header">
+            <h1 class="mb-0">Chatbot Demo by Syed</h1>
+        </div>
+        <div class="card-body">
+            <form id="chatForm" class="mb-3">
+                <div class="input-group">
+                    <input type="text" id="userInput" name="userInput" class="form-control" placeholder="Type your message" required>
+                    <button type="button" class="btn btn-primary ml-3" onclick="getResponse()">Send</button>
+                </div>
+            </form>
+            <div id="responseContainer" class="alert alert-success d-none"></div>
+        </div>
+    </div>
+
+    <script>
+        function getResponse() {
+            const userInput = document.getElementById("userInput").value;
+            fetch("/get_response", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: `userInput=${encodeURIComponent(userInput)}`,
+            })
+            .then(response => response.json())
+            .then(data => {
+                const responseContainer = document.getElementById("responseContainer");
+                responseContainer.innerText = `ChatGPT: ${data.response}`;
+                responseContainer.classList.remove("d-none");
+            });
+        }
+    </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
